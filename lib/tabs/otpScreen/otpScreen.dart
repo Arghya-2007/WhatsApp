@@ -1,4 +1,5 @@
 import 'package:app_project_flutter/Widgets/uihelper.dart';
+import 'package:app_project_flutter/tabs/profile/profileinfo.dart';
 import 'package:flutter/material.dart';
 
 class otpScreen extends StatelessWidget {
@@ -85,7 +86,7 @@ class otpScreen extends StatelessWidget {
         ),
       ),
       floatingActionButton: UiHelper.customButton(callback: (){
-
+        Navigator.push(context, MaterialPageRoute(builder: (context) => profileScreen()));
       }, buttonName: "Verify Now"),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );

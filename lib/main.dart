@@ -12,11 +12,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'WhatsApp',
       theme: ThemeData(
-
-        colorScheme: ColorScheme.fromSeed(seedColor: Color(0XFF00A884)),
         useMaterial3: false,
+        colorScheme: ColorScheme.fromSeed(seedColor: Color(0XFF00A884)),
         fontFamily: "Condensed-Regular",
       ),
       home: SplashScreen()
