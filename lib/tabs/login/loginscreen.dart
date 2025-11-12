@@ -2,6 +2,8 @@ import 'package:app_project_flutter/Widgets/uihelper.dart';
 import 'package:app_project_flutter/tabs/otpScreen/otpScreen.dart';
 import 'package:flutter/material.dart';
 
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
 class loginScreen extends StatefulWidget {
   @override
   State<loginScreen> createState() => _loginScreenState();
@@ -36,7 +38,10 @@ class _loginScreenState extends State<loginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Login with Phone Number"), centerTitle: true),
+      appBar: AppBar(
+      iconTheme: IconThemeData(color: Colors.black),
+        title: Text("Login with Phone Number"), centerTitle: true,
+      ),
 
       body: Column(
         children: [
@@ -73,7 +78,11 @@ class _loginScreenState extends State<loginScreen> {
           DropdownButton<String>(
             value: countries.contains(selectedCountry) ? selectedCountry : null,
             hint: Text("INDIA"),
-            icon: Icon(Icons.arrow_downward),
+            icon: Icon(
+              FontAwesomeIcons.angleDown,
+              color: Color(0XFF00A884),
+              size: 20,
+            ),
             style: TextStyle(color: Colors.black, fontSize: 16),
             dropdownColor: Colors.white70,
             padding: EdgeInsets.only(left: 60, right: 60),

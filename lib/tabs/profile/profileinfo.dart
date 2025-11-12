@@ -1,11 +1,23 @@
+import 'dart:io';
+
 import 'package:app_project_flutter/Widgets/uihelper.dart';
 import 'package:app_project_flutter/tabs/mainpage/mainPage.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:image_picker/image_picker.dart';
 
-class profileScreen extends StatelessWidget {
-  TextEditingController nameController = TextEditingController();
-
+class profileScreen extends StatefulWidget {
   profileScreen({super.key});
+
+  @override
+  State<profileScreen> createState() => _profileScreenState();
+}
+
+class _profileScreenState extends State<profileScreen> {
+  TextEditingController nameController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+
+  File? pickedImage;
 
   @override
   Widget build(BuildContext context) {
@@ -32,10 +44,23 @@ class profileScreen extends StatelessWidget {
               color: Colors.grey,
             ),
             SizedBox(height: 40),
-            CircleAvatar(
-              radius: 80,
-              backgroundColor: Colors.grey,
-              child: Image.asset("assets/images/appcam.png", fit: BoxFit.cover),
+            GestureDetector(
+              onTap: () {
+                openBottom(context);
+              },
+              child: pickedImage == null
+                  ? CircleAvatar(
+                      radius: 80,
+                      backgroundColor: Colors.grey,
+                      child: Image.asset(
+                        "assets/images/appcam.png",
+                        fit: BoxFit.cover,
+                      ),
+                    )
+                  : CircleAvatar(
+                      radius: 80,
+                      backgroundImage: FileImage(pickedImage!),
+                    ),
             ),
             SizedBox(height: 30),
             SizedBox(
@@ -56,8 +81,8 @@ class profileScreen extends StatelessWidget {
             SizedBox(
               width: 350,
               child: TextField(
-                keyboardType: TextInputType.name,
-                controller: nameController,
+                keyboardType: TextInputType.emailAddress,
+                controller: emailController,
                 decoration: InputDecoration(
                   hintText: "Enter your Email...",
                   hintStyle: TextStyle(color: Colors.grey),
@@ -68,11 +93,78 @@ class profileScreen extends StatelessWidget {
               ),
             ),
           ],
-        ),),
-      floatingActionButton: UiHelper.customButton(callback: (){
-        Navigator.push(context, MaterialPageRoute(builder: (context) => mainPage()));
-      }, buttonName: "Next"),
+        ),
+      ),
+      floatingActionButton: UiHelper.customButton(
+        callback: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => mainPage()),
+          );
+        },
+        buttonName: "Next",
+      ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
+  }
+
+  openBottom(BuildContext context) {
+    return showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return Container(
+          height: 100,
+          width: 200,
+
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  IconButton(
+                    onPressed: () {
+                      _imageFromGallery(ImageSource.camera, context);
+                    },
+                    icon: Icon(
+                      FontAwesomeIcons.camera,
+                      color: Colors.green,
+                      size: 50,
+                    ),
+                  ),
+                  SizedBox(width: 80),
+                  IconButton(
+                    onPressed: () {
+                      _imageFromGallery(ImageSource.gallery, context);
+                    },
+                    icon: Icon(
+                      FontAwesomeIcons.image,
+                      color: Colors.green,
+                      size: 50,
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  _imageFromGallery(ImageSource imageSource, BuildContext context) async {
+    try {
+      final image = await ImagePicker().pickImage(source: imageSource);
+      if (image == null) return;
+      final imageTemporary = File(image.path);
+      setState(() {
+        this.pickedImage = imageTemporary;
+      });
+      Navigator.of(context).pop();
+    } catch (ex) {
+      return ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(ex.toString()), backgroundColor: Colors.red),
+      );
+    }
   }
 }
