@@ -1,3 +1,4 @@
+import 'package:app_project_flutter/tabs/mainpage/mainPage.dart';
 import 'package:app_project_flutter/tabs/splash/splashscreen.dart';
 import 'package:flutter/material.dart';
 
