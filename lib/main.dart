@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Color(0XFF00A884)),
         fontFamily: "Condensed-Regular",
       ),
-      home: SplashScreen()
+      home: mainPage()
     );
   }
 }

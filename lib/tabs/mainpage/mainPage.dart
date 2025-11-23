@@ -38,6 +38,7 @@ class mainPage extends StatelessWidget {
             size: 20,
             color: Colors.white,
           ),
+
           actions: [
             Padding(
               padding: const EdgeInsets.only(right: 30),
@@ -52,7 +53,7 @@ class mainPage extends StatelessWidget {
           children: [
             cameraScreen(),
             chatsScreen(),
-            statusScreen(),
+            StatusScreen(),
             callScreen(),
           ],
         ),
